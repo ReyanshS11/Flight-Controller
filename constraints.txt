@@ -1,0 +1,6 @@
+* Can control servos
+* Can utilize a 12V battery supply
+* Can control a 12V brushless motor
+* Can obtain position and altitude data
+* Can store data even when powered off
+* Can connect cameras and other peripheral devices
