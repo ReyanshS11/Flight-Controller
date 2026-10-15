@@ -4,7 +4,10 @@ Parts in lcsc.txt appear in the following order:
 3. Voltage Regulator 5V for Servos (TPS63070)
 4. Voltage Regulator 3.3V for Sensors (LMR51430)
 5. Battery Charging IC (BQ25883)
-6. Microcontroller (STM32F722RET6)
+6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
-8. Barometer (BMP580)
+8. Barometer (BMP581)
 9. LED (Not in lcsc.txt)
+
+1hr - 10/13/2026
+1hr 45min (as of now) - 10/14/2026
