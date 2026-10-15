@@ -9,5 +9,17 @@ Parts in lcsc.txt appear in the following order:
 8. Barometer (BMP581)
 9. LED (Not in lcsc.txt)
 
-1hr - 10/13/2026
-1hr 45min (as of now) - 10/14/2026
+Need to add magnetometer or GPS (or both)
+
+NOTES:
+ption 2: For the Red 2-Pin Main Power Plug (JST-RCY 2.50mm)
+
+The red JST plug uses a 2.50mm pin spacing and usually connects via a wire-to-wire housing, but on a PCB, you will use a standard 2-pin JST header.
+1. In the Schematic Editor (Symbol):
+	• Press A and search for Conn_01x02_Pin.
+2. In the PCB Editor (Footprint):
+	• Assign the footprint library: Connector_JST.
+	• Search for: JST_RCY or use a standard JST_XH_B2B-XH-A if you are splicing the wires into a matching white-style header on your board.
+Pin Mapping for the Schematic:
+• Pin 1: GND (Black wire)
+• Pin 2: VCC / +7.4V (Red wire)
