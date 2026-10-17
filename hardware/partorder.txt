@@ -1,8 +1,8 @@
 Parts in lcsc.txt appear in the following order:
 1. USB-C
 2. MicroSD slot
-3. Voltage Regulator 5V (TPS63070)
-4. Voltage Regulator 3.3V - for Sensors (LMR51430)
+3. Buck-boost 5V (TPS63070)
+4. Buck-boost 3.3V - for Sensors (LMR51430)
 5. Battery Charging IC (BQ25883)
 6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
