@@ -9,7 +9,9 @@ Parts in lcsc.txt appear in the following order:
 8. Barometer (BMP581)
 9. Inductor for Voltage Regulator 5V (XGL4020-152MEC)
 10. Inductor for Battery Charging IC (DFE252012F-1R0M=P2)
-11. LED (Not in lcsc.txt)
+11. LoRa Module (Ra-02)
+12. GPS (NEO-M8U-06B)
+13. Magnetometer (LIS2MDLTR)
 
 Need to add magnetometer or GPS (or both)
 
