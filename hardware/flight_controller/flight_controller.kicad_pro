@@ -280,6 +280,14 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
+      },
+      {
+        "line_style": 0,
+        "name": "RF_50Ohm",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "tuning_profile": ""
       }
     ],
     "meta": {
@@ -287,7 +295,12 @@
     },
     "net_colors": {},
     "netclass_assignments": {},
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "RF_50Ohm",
+        "pattern": "/RF_IN"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {
@@ -430,7 +443,7 @@
         "uuid": "1871494f-7338-4204-aa1d-d580acbe967f"
       }
     ],
-    "used_designators": "#PWR1-31,C1-6,C8-22,D1,J1,L1-3,R1-15,U1-5,USB1",
+    "used_designators": "#PWR1-44,C1-6,C8-27,Card1,D1,J1,JP1,L1-4,R1-23,TP1-2,U1-8,USB1",
     "variants": []
   },
   "sheets": [

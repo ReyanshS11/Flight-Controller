@@ -1,6 +1,6 @@
 Parts in lcsc.txt appear in the following order:
 1. USB-C
-2. MicroSD slot
+2. MicroSD slot (TF-01A)
 3. Buck-boost 5V (TPS63070)
 4. Buck-boost 3.3V - for Sensors (LMR51430)
 5. Battery Charging IC (BQ25883)
@@ -13,8 +13,23 @@ Parts in lcsc.txt appear in the following order:
 12. LoRa Module (Ra-02)
 13. GPS (NEO-M8U-06B)
 14. Magnetometer (LIS2MDLTR)
+15. LED for GPS - Emerald Green (YLED0603G)
+16. U.FL Connecter - GPS to Active Antenna (U.FL-R-SMT-1(10))
+17. Inductor for GPS (LQG15HN27NJ02D)
 
-Need to add magnetometer or GPS (or both)
+IMPORTANT, FINSIH STEP 7:
+
+1. Assign a Net Class to your RF Wire
+
+1. Open your schematic in Eeschema.
+2. Press the Net Label tool shortcut (L) and create a label named RF_IN.
+3. Place this label on the wire connecting Pin 11 (RF_IN) of the u-blox module to the signal pin of your U.FL connector.
+4. In the top toolbar, go to File ➡️ Schematic Setup.
+5. Under the Project menu on the left, click Net Classes.
+6. Click the + (Add) button to create a new class. Name it RF_50Ohm.
+7. In the row for your new RF_50Ohm class, set the Clearance and Track Width values to your calculated thickness (for example, if you are doing a 4-layer board and calculated 0.37mm, enter 0.37mm into the Track Width field).
+8. At the bottom of that window, assign your net name (/RF_IN) to the new net class (RF_50Ohm).
+When you push your design from the schematic over to the PCB layout tool (Pcbnew), KiCad will automatically force that specific trace to be exactly 0.37mm wide, preventing you from accidentally making it too thin or too thick.
 
 NOTES:
 Option 2: For the Red 2-Pin Main Power Plug (JST-RCY 2.50mm)
@@ -28,3 +43,38 @@ The red JST plug uses a 2.50mm pin spacing and usually connects via a wire-to-wi
 Pin Mapping for the Schematic:
 • Pin 1: GND (Black wire)
 • Pin 2: VCC / +7.4V (Red wire)
+
+NOTES:
+To make a 50-ohm RF trace in KiCad, you cannot just use a random trace width. High-frequency RF signals (like the 1.575 GHz GPS signal) travel down wires like waves. If the trace doesn't have a controlled 50-ohm characteristic impedance, the signal will bounce backward when it hits a connector, severely degrading or completely killing your GPS reception.
+To calculate the exact width your trace needs to be, you must use KiCad’s built-in Calculator Tool.
+
+Step 1: Open the KiCad Calculator Tool
+
+1. Open the main KiCad project manager window.
+2. Click on the Calculator Tool icon (it looks like a classic calculator).
+3. Click on the TransLine tab at the top.
+4. Select Microstrip on the left side (this is a standard trace running over a solid ground plane layer beneath it).
+
+Step 2: Input Your PCB Manufacturer's Values
+
+The trace width depends entirely on the thickness of your PCB and the material the factory uses. Assuming you are using a standard JLCPCB or PCBWay 4-layer board with a 1.6mm thickness (using the standard 7628 stackup), enter these exact parameters into the Parameters box on the left:
+• Er (Dielectric Constant): 4.5 (standard value for FR4 material)
+• H (Height/Distance to Ground Plane): 0.2mm (This is the critical distance between Layer 1 and Layer 2 on a standard 4-layer stackup. Note: If you are doing a cheap 2-layer board, H will be 1.6mm.)
+• T (Copper Thickness): 0.035mm (This represents standard 1oz copper).
+• Roughness: 0 (Can be ignored for GPS frequencies).
+
+Step 3: Calculate the Width
+
+1. In the Component Parameters section on the right side, type 50 into the Z0 (Impedance) box.
+2. Type 1.575 into the F (Frequency) box (in GHz).
+3. Click the Analyze -> button in the middle.
+KiCad will instantly calculate the required trace width and display it under Physical Parameters (W).
+• For a standard 4-layer board (H = 0.2mm): Your trace width (W) will be roughly 0.37 mm.
+• For a standard 2-layer board (H = 1.6mm): Your trace width (W) will be massive—roughly 3.0 mm. (This is why engineers almost always use 4-layer boards for RF designs; a 3mm trace is too wide to connect cleanly to a tiny u-blox or U.FL pin).
+
+Step 4: Laying Out the Trace in KiCad Pcbnew (Rules to Follow)
+
+Once you know your target width (e.g., 0.37mm), apply these strict routing rules during your layout:
+1. Solid Ground Shielding: You must have an unbroken, solid GND copper zone covering the entire area directly beneath your RF trace on Layer 2. If there are any cuts, slots, or other traces crossing underneath your RF trace on Layer 2, the 50-ohm math breaks down, and the signal will be corrupted.
+2. Make it Short and Straight: Keep the distance between the u-blox RF_IN pin and your U.FL connector as humanly short as possible (ideally under 10–15mm). Do not use sharp 90-degree corners. If you must bend the trace, use smooth 45-degree bends or gentle curves.
+3. Isolation (The 3W Rule): Keep all other digital signals (like your STM32's fast SPI clock or power lines) far away from the RF trace. Ensure the gap between your RF trace and any neighboring copper tracks is at least 3 times the width of the RF trace.
