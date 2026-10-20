@@ -3,7 +3,7 @@ Parts in lcsc.txt appear in the following order:
 2. MicroSD slot (TF-01A)
 3. Buck-boost 5V (TPS63070)
 4. Buck-boost 3.3V - for Sensors (LMR51430)
-5. Battery Charging IC (BQ25883)
+5. Battery Charging IC (BQ25883RGER)
 6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
 8. Barometer (BMP581)
@@ -45,6 +45,12 @@ Pin Mapping for the Schematic:
 • Pin 2: VCC / +7.4V (Red wire)
 
 NOTES:
+USE EXTERNAL LIPO CHARGER, DO NOT USE USB TO CHARGE BATTERY
+
+Connecter for the ESC on the PCB side: AMASS_XT60-F_1x02_P7.20mm_Vertical, in schematic use Conn_01x02_Socket. It uses XT60H-M Male Connector
+
+A good ESC: HGLRC 60A V1 ESC
+
 To make a 50-ohm RF trace in KiCad, you cannot just use a random trace width. High-frequency RF signals (like the 1.575 GHz GPS signal) travel down wires like waves. If the trace doesn't have a controlled 50-ohm characteristic impedance, the signal will bounce backward when it hits a connector, severely degrading or completely killing your GPS reception.
 To calculate the exact width your trace needs to be, you must use KiCad’s built-in Calculator Tool.
 
