@@ -6,7 +6,7 @@ Parts in lcsc.txt appear in the following order:
 5. Battery Charging IC (BQ25883RGER)
 6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
-8. Barometer (BMP581)
+8. Barometer (BMP580)
 9. Inductor for 5V Buck Boost (XGL4020-152MEC)
 10. Inductor for 3.3 Buck (YHNR3015-5R6M)
 11. Inductor for Battery Charging IC (DFE252012F-1R0M=P2)
@@ -16,6 +16,11 @@ Parts in lcsc.txt appear in the following order:
 15. LED for GPS - Emerald Green (YLED0603G)
 16. U.FL Connecter - GPS to Active Antenna (U.FL-R-SMT-1(10))
 17. Inductor for GPS (LQG15HN27NJ02D)
+18. Ferrite Bead for MCU (FCM1608KF-601T03)
+19. Button for MCU (TS-1088-AR02016)
+20. 25MHz Crystal for HSE CLock for MSU (X322525MOB4SI)
+21. 32.768kHz Crystal for LSE Clock for MSU (Q13FC13500004)
+22. Passive Antenna for LoRa (ANT1204F002R0433A)
 
 IMPORTANT, FINSIH STEP 7:
 
@@ -50,6 +55,7 @@ USE EXTERNAL LIPO CHARGER, DO NOT USE USB TO CHARGE BATTERY
 Connecter for the ESC on the PCB side: AMASS_XT60-F_1x02_P7.20mm_Vertical, in schematic use Conn_01x02_Socket. It uses XT60H-M Male Connector
 
 A good ESC: HGLRC 60A V1 ESC
+A good camera: https://www.getfpv.com/fpv/cameras/betafpv-p1-air-unit-hd-vtx.html
 
 To make a 50-ohm RF trace in KiCad, you cannot just use a random trace width. High-frequency RF signals (like the 1.575 GHz GPS signal) travel down wires like waves. If the trace doesn't have a controlled 50-ohm characteristic impedance, the signal will bounce backward when it hits a connector, severely degrading or completely killing your GPS reception.
 To calculate the exact width your trace needs to be, you must use KiCad’s built-in Calculator Tool.

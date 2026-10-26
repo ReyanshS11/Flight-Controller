@@ -1,4 +1,6 @@
 (fp_lib_table
 	(version 7)
 	(lib (name "easyeda2kicad") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/lcsc/easyeda2kicad.pretty") (options "") (descr ""))
+	(lib (name "Library") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/Library.pretty") (options "") (descr ""))
+	(lib (name "footprints") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/Antenna/footprints.pretty") (options "") (descr ""))
 )
