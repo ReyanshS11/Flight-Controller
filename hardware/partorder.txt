@@ -3,7 +3,7 @@ Parts in lcsc.txt appear in the following order:
 2. MicroSD slot (TF-01A)
 3. Buck-boost 5V (TPS63070)
 4. Buck-boost 3.3V - for Sensors (LMR51430)
-5. Battery Charging IC (BQ25883RGER)
+5. Battery Charging IC (BQ25887RGER)
 6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
 8. Barometer (BMP580)

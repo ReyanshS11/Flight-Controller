@@ -3,4 +3,5 @@
 	(lib (name "easyeda2kicad") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/lcsc/easyeda2kicad.pretty") (options "") (descr ""))
 	(lib (name "Library") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/Library.pretty") (options "") (descr ""))
 	(lib (name "footprints") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/Antenna/footprints.pretty") (options "") (descr ""))
+	(lib (name "jst_sh_connectors") (type "KiCad") (uri "C:/Reyansh/Flight Controller/hardware/lib/JST_SH_Connectors/footprints.pretty") (options "") (descr ""))
 )
