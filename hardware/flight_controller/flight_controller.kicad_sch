@@ -1420,190 +1420,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "PassiveAntennaSMDForLoRa:ANT1204F002R0433A"
-			(pin_names
-				(offset 0.254)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at 20.32 10.16 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-				)
-			)
-			(property "Value" "ANT1204F002R0433A"
-				(at 20.32 7.62 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.524 1.524)
-					)
-				)
-			)
-			(property "Footprint" "CHIP_R0433A_YAG"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-				)
-			)
-			(property "Datasheet" "ANT1204F002R0433A"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-						(italic yes)
-					)
-				)
-			)
-			(property "Description" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_locked" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "ANT1204F002R0433A"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "CHIP_R0433A_YAG CHIP_R0433A_YAG-M CHIP_R0433A_YAG-L"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "ANT1204F002R0433A_0_1"
-				(polyline
-					(pts
-						(xy 7.62 5.08) (xy 7.62 -5.08)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 7.62 -5.08) (xy 33.02 -5.08)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 33.02 5.08) (xy 7.62 5.08)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 33.02 -5.08) (xy 33.02 5.08)
-					)
-					(stroke
-						(width 0.127)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin unspecified line
-					(at 0 0 0)
-					(length 7.62)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin unspecified line
-					(at 40.64 0 180)
-					(length 7.62)
-					(name "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "RF_Module:Ai-Thinker-Ra-02"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -9864,16 +9680,6 @@
 		)
 		(uuid "569cf395-6c7b-45bb-b26a-c431526ff220")
 	)
-	(text "Antenna"
-		(exclude_from_sim no)
-		(at 330.708 88.646 0)
-		(effects
-			(font
-				(size 5.08 5.08)
-			)
-		)
-		(uuid "6c6742f1-8d5b-4732-aba7-dd614807ea1a")
-	)
 	(text "MicroSD"
 		(exclude_from_sim no)
 		(at 197.866 154.178 0)
@@ -10445,12 +10251,6 @@
 		(uuid "a30d9b61-ad31-4259-bafd-9fa9f5421013")
 	)
 	(junction
-		(at 351.79 109.22)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a343b94d-5e49-433f-8140-16915dbec07c")
-	)
-	(junction
 		(at 160.02 203.2)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10737,6 +10537,10 @@
 		(uuid "2f854856-ffdd-4b04-a7ae-6a9d2bb13ebf")
 	)
 	(no_connect
+		(at 205.74 337.82)
+		(uuid "301d4b8c-ad68-4486-af38-879403f9992b")
+	)
+	(no_connect
 		(at 54.61 378.46)
 		(uuid "320d02d7-3714-4526-91bb-84a96e554fd5")
 	)
@@ -10775,10 +10579,6 @@
 	(no_connect
 		(at 165.1 383.54)
 		(uuid "48c05f07-fa3b-4e40-a87e-700b5055e758")
-	)
-	(no_connect
-		(at 308.61 109.22)
-		(uuid "49d621ab-6967-445f-bc4f-677ddbffd2ba")
 	)
 	(no_connect
 		(at 54.61 375.92)
@@ -11357,16 +11157,6 @@
 			(type default)
 		)
 		(uuid "1716a012-51cd-4b0e-bfca-29b0f41035e0")
-	)
-	(wire
-		(pts
-			(xy 351.79 109.22) (xy 354.33 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "179f0a11-af5f-4126-892d-e4d79662f25c")
 	)
 	(wire
 		(pts
@@ -13650,16 +13440,6 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 247.65) (xy 53.34 247.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8ae647cc-9cdd-417b-ab10-9b945c9466e2")
-	)
-	(wire
-		(pts
 			(xy 379.73 204.47) (xy 379.73 205.74)
 		)
 		(stroke
@@ -13687,6 +13467,16 @@
 			(type default)
 		)
 		(uuid "8c6a731e-4d49-4566-893e-0ed20e4e1121")
+	)
+	(wire
+		(pts
+			(xy 53.34 247.65) (xy 55.88 247.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8c8d7c85-c1dc-46e9-859c-c68177b384f8")
 	)
 	(wire
 		(pts
@@ -14710,16 +14500,6 @@
 	)
 	(wire
 		(pts
-			(xy 351.79 106.68) (xy 351.79 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b804a8ad-75e8-45b4-ab30-0adcc349ce41")
-	)
-	(wire
-		(pts
 			(xy 184.15 110.49) (xy 184.15 111.76)
 		)
 		(stroke
@@ -14747,16 +14527,6 @@
 			(type default)
 		)
 		(uuid "b886fa12-9ee9-4e00-bc3c-04ca8ba0c262")
-	)
-	(wire
-		(pts
-			(xy 361.95 93.98) (xy 361.95 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b9175d76-9b90-4193-a2d5-a6498e01e6f9")
 	)
 	(polyline
 		(pts
@@ -14837,16 +14607,6 @@
 			(type default)
 		)
 		(uuid "c1025b09-71b9-493a-be67-0b8dbe256c4f")
-	)
-	(wire
-		(pts
-			(xy 361.95 121.92) (xy 361.95 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c1675463-fe43-475f-ac72-d18cd4a6fd12")
 	)
 	(wire
 		(pts
@@ -15547,16 +15307,6 @@
 			(type default)
 		)
 		(uuid "e28d5e57-e232-4b20-8419-e17d27d932cc")
-	)
-	(wire
-		(pts
-			(xy 349.25 109.22) (xy 351.79 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e2ce416a-f2c2-4f22-ab2b-96f793355e89")
 	)
 	(polyline
 		(pts
@@ -16288,16 +16038,6 @@
 		)
 		(uuid "19f32200-581c-4e69-b2c5-4df04e7b5882")
 	)
-	(label "ANT_IN"
-		(at 351.79 106.68 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1a0bc99a-fc58-42e1-8cff-6ea2bd113263")
-	)
 	(label "BQ_CE"
 		(at 208.28 373.38 0)
 		(effects
@@ -16317,6 +16057,16 @@
 			(justify right bottom)
 		)
 		(uuid "1e394a63-998e-445d-9a9f-ffb583f087f0")
+	)
+	(label "USB_DP"
+		(at 55.88 247.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2125bb92-22b9-4474-ac62-b2b21dc3c886")
 	)
 	(label "SPI_SDI"
 		(at 337.82 41.91 0)
@@ -16387,16 +16137,6 @@
 			(justify right bottom)
 		)
 		(uuid "3299ad3c-fba0-4ff6-8fee-040e2749f082")
-	)
-	(label "USB_DP"
-		(at 55.88 247.65 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "37114492-5abe-47b1-9721-8ff8d93b4bad")
 	)
 	(label "ESC_M1"
 		(at 162.56 363.22 180)
@@ -16908,16 +16648,6 @@
 		)
 		(uuid "b1895bef-b201-44ef-889d-c8d7c6c4cb38")
 	)
-	(label ""
-		(at 54.61 247.65 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "b1af3e1f-14d3-4c8f-a85b-074ecb74d7f7")
-	)
 	(label "RF_DIO1"
 		(at 527.05 41.91 0)
 		(effects
@@ -17228,6 +16958,16 @@
 		)
 		(uuid "ef589a08-4dea-4b65-b723-62f6b8f7f0ac")
 	)
+	(label "USB_DP"
+		(at 55.88 252.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "efebb309-b902-4c2b-9554-a8d98ff7d59b")
+	)
 	(label "BOOT"
 		(at 383.54 287.02 0)
 		(effects
@@ -17268,16 +17008,6 @@
 		)
 		(uuid "f8d9c821-3389-4d8f-9a9a-8827586a2ece")
 	)
-	(label "USB_DP"
-		(at 208.28 340.36 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "f9b80281-2160-4611-b440-800cc257229e")
-	)
 	(label "ESC_M4"
 		(at 50.8 373.38 180)
 		(effects
@@ -17288,16 +17018,6 @@
 		)
 		(uuid "f9e2fe97-e9de-4675-8d3a-8998e3441c83")
 	)
-	(label "USB_DP"
-		(at 55.88 252.73 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fa7e0f60-1fa0-44e0-9b8d-f0e24e7a1e60")
-	)
 	(label "SPI_SDI"
 		(at 541.02 283.21 0)
 		(effects
@@ -17307,6 +17027,16 @@
 			(justify left bottom)
 		)
 		(uuid "fb67aedb-b66a-4f1f-8b2d-d963c78db651")
+	)
+	(label "USB_DP"
+		(at 208.28 340.36 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fbbf711a-1648-405f-a168-fa4cda7a116a")
 	)
 	(label "RF_DIO1"
 		(at 162.56 266.7 180)
@@ -18027,84 +17757,6 @@
 			(project "flight_controller"
 				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
 					(reference "C22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 361.95 124.46 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "0cd56fd7-0c30-4061-85a6-6ae3e53847bb")
-		(property "Reference" "#PWR070"
-			(at 361.95 130.81 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 361.95 129.54 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 361.95 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 361.95 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 361.95 124.46 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a2122220-8d61-46be-a42d-0902cbaa6fe0")
-		)
-		(instances
-			(project "flight_controller"
-				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
-					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -20608,84 +20260,6 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 361.95 93.98 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "2ec38987-6b8d-4694-b1bb-de69f9fd0255")
-		(property "Reference" "#PWR072"
-			(at 361.95 87.63 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 361.95 88.9 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 361.95 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 361.95 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 361.95 93.98 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "390c0665-8c37-46aa-abec-aa719ff89ecb")
-		)
-		(instances
-			(project "flight_controller"
-				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
-					(reference "#PWR072")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
 		(at 549.91 309.88 0)
 		(unit 1)
 		(body_style 1)
@@ -22588,124 +22162,6 @@
 			(project "flight_controller"
 				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
 					(reference "#PWR068")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "easyeda2kicad:U.FL-R-SMT-1")
-		(at 359.41 109.22 270)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "61c6530d-fa31-4fa0-9bf4-c378aea7c515")
-		(property "Reference" "JP2"
-			(at 365.76 107.9499 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "U.FL-R-SMT-1"
-			(at 365.76 110.4899 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "easyeda2kicad:ANT-SMD_UFL-R-SMT-1-10"
-			(at 346.71 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Connectors_HRS_U-FL-R-SMT-1-10_3310472210-IPE-XBoard-end-IPXConnector-SMD_C88373.html"
-			(at 344.17 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "3310472210，IPE-X IPX，"
-			(at 359.41 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Manufacturer" "HRS(广濑)"
-			(at 341.63 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "MPN" "U.FL-R-SMT-1(10)"
-			(at 339.09 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" "C88373"
-			(at 336.55 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "f726e7da-1f80-4e51-9504-b0ed61aa88dc")
-		)
-		(pin "3"
-			(uuid "50823857-1dc9-486e-87ba-0e4c84fb376f")
-		)
-		(pin "1"
-			(uuid "30e8cc2d-bf78-4cfc-9365-a5097a2f1c03")
-		)
-		(instances
-			(project "flight_controller"
-				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
-					(reference "JP2")
 					(unit 1)
 				)
 			)
@@ -29090,88 +28546,6 @@
 			(project "flight_controller"
 				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
 					(reference "#PWR048")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PassiveAntennaSMDForLoRa:ANT1204F002R0433A")
-		(at 349.25 109.22 0)
-		(mirror y)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "c0dfa6de-ad17-493d-a526-e2101dda7e3b")
-		(property "Reference" "U11"
-			(at 328.93 99.06 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Value" "ANT1204F002R0433A"
-			(at 328.93 101.6 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-			)
-		)
-		(property "Footprint" "footprints:CHIP_R0433A_YAG"
-			(at 349.25 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
-		(property "Datasheet" "ANT1204F002R0433A"
-			(at 349.25 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 349.25 109.22 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "9f824de0-c638-4379-b41a-7a4a41176c38")
-		)
-		(pin "1"
-			(uuid "4deb728f-fab3-4e5e-b23d-10f786f02008")
-		)
-		(instances
-			(project "flight_controller"
-				(path "/1871494f-7338-4204-aa1d-d580acbe967f"
-					(reference "U11")
 					(unit 1)
 				)
 			)
