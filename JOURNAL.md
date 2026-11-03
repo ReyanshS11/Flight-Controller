@@ -3,7 +3,7 @@ title: "Flight Controller"
 github: ""
 description: "A flight controller built for future projects that might need it."
 created_at: "2026-10-12"
-total_time: "25h 24m"
+total_time: "26h 24m"
 ---
 
 # October 12, 2026: Built Parts List
@@ -137,3 +137,11 @@ I finished the design and routing of the whole PCB so there aren't any more DRC 
 ![](https://fabricate.hackclub-assets.com/280d1039ab2f8960c6360432f8b2c95c39c4b6587817e492004728136f645039/image-png/PCBFinishedWithoutSilkscreen.png)
 
 **Total time spent: 1h 30m**
+
+# November 3, 2026: Finishing Touches
+
+I finished organizing the silkscreen for the components and I added in the 3d models for all of the components so the 3D viewer now shows how the PCB will look after everything is on there.
+
+![](https://fabricate.hackclub-assets.com/03e82c6b4d7508f2212c89754d39bb284df5fb964c9de40746c54c01649e62fa/image-png/FinishingTouches.png)
+
+**Total time spent: 1h**
