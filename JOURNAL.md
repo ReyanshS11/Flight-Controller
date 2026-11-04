@@ -3,7 +3,7 @@ title: "Flight Controller"
 github: ""
 description: "A flight controller built for future projects that might need it."
 created_at: "2026-10-12"
-total_time: "26h 24m"
+total_time: "29h 42m"
 ---
 
 # October 12, 2026: Built Parts List
@@ -145,3 +145,11 @@ I finished organizing the silkscreen for the components and I added in the 3d mo
 ![](https://fabricate.hackclub-assets.com/03e82c6b4d7508f2212c89754d39bb284df5fb964c9de40746c54c01649e62fa/image-png/FinishingTouches.png)
 
 **Total time spent: 1h**
+
+# November 4, 2026: Final Changes
+
+I worked on the README.md a little bit and made the final changes. I realized that the LoRa module footprint wasn't correct so I had to change that and I made the labels for each component bigger and easier to read.
+
+![](https://fabricate.hackclub-assets.com/ff0ac6b00d557aa647bcebd8b2ae8f9d813eb87ca24f36c86f685f2690edfd37/image-png/image.png)
+
+**Total time spent: 3h 18m**
