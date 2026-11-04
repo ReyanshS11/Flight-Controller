@@ -1674,7 +1674,7 @@
 			(uuid "12fcf875-897c-40f0-9cf0-b2ae2cac4593")
 		)
 		(embedded_fonts no)
-		(model "hardware/lib/lcsc/easyeda2kicad.3dshapes/VFQFPN-24_L4.0-W4.0-H0.9-P0.50.wrl"
+		(model "C:/Reyansh/Flight Controller/hardware/lib/lcsc/easyeda2kicad.3dshapes/VFQFPN-24_L4.0-W4.0-H0.9-P0.50.step"
 			(offset
 				(xyz 0 0 0)
 			)

@@ -570,7 +570,7 @@
       "netlist": "",
       "plot": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../../flight_controller.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
