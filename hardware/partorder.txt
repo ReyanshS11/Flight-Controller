@@ -7,7 +7,7 @@ Parts in lcsc.txt appear in the following order:
 6. Microcontroller (STM32H743VIT6)
 7. IMU (ICM-45686)
 8. Barometer (BMP581)
-9. Inductor for 5V Buck Boost (XGL4020-152MEC)
+9. Inductor for 5V Buck Boost (C3033018)
 10. Inductor for 3.3 Buck (YHNR3015-5R6M)
 11. Inductor for Battery Charging IC (DFE252012F-1R0M=P2)
 12. LoRa Module (Ra-02)
