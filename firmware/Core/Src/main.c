@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <iostream>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +31,14 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define Baro_ADDR  (0x47 << 1)
+#define Charger_ADDR    (0x6B << 1)
 
+#define Baro_REG_PRESSURE_0  0x20
+#define Baro_REG_TEMP_0   0x1D
+
+#define Charger_REG_VCELL1      0x1A       
+#define Charger_REG_VCELL2      0x1C
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -55,7 +62,14 @@ UART_HandleTypeDef huart8;
 HCD_HandleTypeDef hhcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
+float pressure = 0.0f;
+float temperature = 0.0f;
 
+float cell1_voltage = 0.0f;
+float cell2_voltage = 0.0f;
+
+uint8_t bmp_buffer[3];
+uint8_t bq_buffer[2];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,7 +84,7 @@ static void MX_TIM1_Init(void);
 static void MX_UART8_Init(void);
 static void MX_USB_OTG_FS_HCD_Init(void);
 /* USER CODE BEGIN PFP */
-
+void Read_Barometer_And_Charger_Data(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -125,6 +139,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    Read_Barometer_And_Charger_Data();
+
+    HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -649,7 +666,47 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void Read_Barometer_And_Charger_Data(void)
+{
+  if (HAL_I2C_Mem_Read(&hi2c1, Baro_ADDR, Baro_REG_PRESSURE_0, I2C_MEMADD_SIZE_8BIT, bmp_buffer, 3, 100) == HAL_OK)
+  {
+    uint32_t raw_pressure = ((uint32_t)bmp_buffer[2] << 16) |
+                            ((uint32_t)bmp_buffer[1] << 8) |
+                            (uint32_t)bmp_buffer[0];
 
+    pressure = (float)raw_pressure / 64.0f;
+  }
+
+  if (HAL_I2C_Mem_Read(&hi2c1, Baro_ADDR, Baro_REG_TEMP_0, I2C_MEMADD_SIZE_8BIT, bmp_buffer, 3, 100) == HAL_OK)
+  {
+    uint32_t raw_temp = ((int32_t)bmp_buffer[2] << 16) |
+                        ((int32_t)bmp_buffer[1] << 8) |
+                        (int32_t)bmp_buffer[0];
+
+    if (raw_temp & 0x00800000) {
+      raw_temp |= 0xFF000000;
+    }
+
+    temperature = (float)raw_temp / 65536.0f;
+  }
+
+  HAL_Delay(5); 
+
+  // ==========================================
+  // 2. READ BQ25887 CHARGER DATA
+  // ==========================================
+  if (HAL_I2C_Mem_Read(&hi2c1, Charger_ADDR, Charger_REG_VCELL1, I2C_MEMADD_SIZE_8BIT, bq_buffer, 2, 100) == HAL_OK)
+  {
+      uint16_t raw_vcell1 = ((uint16_t)bq_buffer[0] << 8) | bq_buffer[1];
+      cell1_voltage = (float)raw_vcell1 / 1000.0f;
+  }
+  
+  if (HAL_I2C_Mem_Read(&hi2c1, Charger_ADDR, Charger_REG_VCELL2, I2C_MEMADD_SIZE_8BIT, bq_buffer, 2, 100) == HAL_OK)
+  {
+      uint16_t raw_vcell2 = ((uint16_t)bq_buffer[0] << 8) | bq_buffer[1];
+      cell2_voltage = (float)raw_vcell2 / 1000.0f;
+  }
+}
 /* USER CODE END 4 */
 
  /* MPU Configuration */
