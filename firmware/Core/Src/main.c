@@ -26,20 +26,45 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+typedef struct {
+  float accel_g[3];
+  float gyro_dps[3];
+  float temp_c;
+} IMU_Data_t;
 
+typedef struct {
+  float mag_ut[3];
+  float temp_c;
+} MAG_Data_t;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define Baro_ADDR       (0x47 << 1)
 #define Charger_ADDR    (0x6B << 1)
-#define IMU_ADDR        ()
 
 #define Baro_REG_PRESSURE_0   0x20
 #define Baro_REG_TEMP_0       0x1D
 
 #define Charger_REG_VCELL1      0x1A       
 #define Charger_REG_VCELL2      0x1C
+
+#define IMU_REG_ACCEL_X1        0x00
+#define IMU_PWR_MGMT0           0x10
+#define IMU_ACCEL_CONFIG0       0x1B
+#define IMU_GYRO_CONFIG0        0x1C
+#define IMU_WHO_AM_I            0x72
+
+#define ACCEL_CONVERSION        2048.0f
+#define GYRO_CONVERSION         16.384f
+
+#define MAG_WHO_AM_I            0x4F // Returns 0x40
+#define OUTX_L_REG              0x68
+#define MAG_CFG_REG_A           0x60
+#define MAG_CFG_REG_B           0x61
+#define MAG_CFG_REG_C           0x62
+
+#define MAG_CONVERSION          0.15f
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -64,6 +89,8 @@ UART_HandleTypeDef huart8;
 HCD_HandleTypeDef hhcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
+volatile uint8_t read_sensors_flag = 0;
+
 float pressure = 0.0f;
 float temperature = 0.0f;
 
@@ -72,6 +99,12 @@ float cell2_voltage = 0.0f;
 
 uint8_t bmp_buffer[3];
 uint8_t bq_buffer[2];
+
+IMU_Data_t imu_data;
+uint8_t imu_online = 0;
+
+MAG_Data_t mag_data;
+uint8_t mag_online = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +121,14 @@ static void MX_UART8_Init(void);
 static void MX_USB_OTG_FS_HCD_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
-void Read_Barometer_And_Charger_Data(void);
+void Read_Barometer(void);
+void Read_Charger(void);
+
+uint8_t IMU_Init(void);
+void Read_IMU(IMU_Data_t *data);
+
+uint8_t MAG_Init(void);
+void Read_MAG(MAG_Data_t *data);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -140,14 +180,58 @@ int main(void)
   MX_USB_OTG_FS_HCD_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+  imu_online = IMU_Init();
+  mag_online = MAG_Init();
 
+  HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    Read_Barometer_And_Charger_Data();
+    if (read_sensors_flag == 1)
+    {
+      read_sensors_flag = 0;
+
+      // Read IMU
+      if (imu_online)
+      {
+        Read_IMU(&imu_data);
+      }
+
+      static uint8_t tick = 0;
+      tick++;
+
+      switch (tick)
+      {
+        case 1:
+          if (mag_online)
+          {
+            Read_MAG(&mag_data);
+          }
+          break;
+
+        case 2:
+          Read_Barometer();
+          break;
+
+        case 3:
+          Read_Charger();
+          break;
+
+        case 4:
+          // Read GPS
+          break;
+
+        case 10:
+          tick = 0;
+          break;
+
+        default:
+          break;
+      }
+    }
 
     HAL_Delay(100);
     /* USER CODE END WHILE */
@@ -733,7 +817,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void Read_Barometer_And_Charger_Data(void)
+void Read_Barometer(void)
 {
   if (HAL_I2C_Mem_Read(&hi2c1, Baro_ADDR, Baro_REG_PRESSURE_0, I2C_MEMADD_SIZE_8BIT, bmp_buffer, 3, 100) == HAL_OK)
   {
@@ -756,9 +840,11 @@ void Read_Barometer_And_Charger_Data(void)
 
     temperature = (float)raw_temp / 65536.0f;
   }
+}
 
-  HAL_Delay(5); 
 
+void Read_Charger(void)
+{
   if (HAL_I2C_Mem_Read(&hi2c1, Charger_ADDR, Charger_REG_VCELL1, I2C_MEMADD_SIZE_8BIT, bq_buffer, 2, 100) == HAL_OK)
   {
       uint16_t raw_vcell1 = ((uint16_t)bq_buffer[0] << 8) | bq_buffer[1];
@@ -769,6 +855,148 @@ void Read_Barometer_And_Charger_Data(void)
   {
       uint16_t raw_vcell2 = ((uint16_t)bq_buffer[0] << 8) | bq_buffer[1];
       cell2_voltage = (float)raw_vcell2 / 1000.0f;
+  }
+}
+
+
+static void IMU_WriteReg(uint8_t reg, uint8_t val)
+{
+  uint8_t tx[2] = { reg & 0x7F, val }; // Bit 7 = 0 for SPI write
+  HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_RESET);
+  HAL_SPI_Transmit(&hspi1, tx, 2, 10);
+  HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_SET);
+}
+
+static void IMU_ReadRegs(uint8_t start_reg, uint8_t *buf, uint16_t len)
+{
+    uint8_t tx = start_reg | 0x80; // Bit 7 = 1 for SPI read
+    HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_RESET);
+    HAL_SPI_Transmit(&hspi1, &tx, 1, 10);
+    HAL_SPI_Receive(&hspi1, buf, len, 10);
+    HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_SET);
+}
+
+uint8_t IMU_Init(void)
+{
+  uint8_t who_am_i = 0;
+
+  HAL_GPIO_WritePin(ICM_CS_GPIO_Port, ICM_CS_Pin, GPIO_PIN_SET);
+  HAL_Delay(10); // Give chip time to boot
+
+  // Verify SPI comms (0x72 should return 0xE9)
+  IMU_ReadRegs(IMU_WHO_AM_I, &who_am_i, 1);
+  if (who_am_i != 0xE9)
+  {
+    return 0; // We have a problem
+  }
+
+  IMU_WriteReg(IMU_ACCEL_CONFIG0, 0x15);
+  IMU_WriteReg(IMU_GYRO_CONFIG0, 0x15);
+  IMU_WriteReg(IMU_PWR_MGMT0, 0x0F); // Enables low-noise mode for both accel and gyro
+
+  HAL_Delay(50); // Give time for sensors to stabilize
+
+  return 1; // Success
+}
+
+void Read_IMU(IMU_Data_t *data)
+{
+  uint8_t raw[14];
+
+  IMU_ReadRegs(IMU_REG_ACCEL_X1, raw, 14);
+
+  // Combine bytes in pairs to create 16-bit integers
+  int16_t raw_ax = (int16_t)((raw[0] << 8) | raw[1]);
+  int16_t raw_ay = (int16_t)((raw[2] << 8) | raw[3]);
+  int16_t raw_az = (int16_t)((raw[4] << 8) | raw[5]);
+
+  int16_t raw_gx = (int16_t)((raw[6] << 8) | raw[7]);
+  int16_t raw_gy = (int16_t)((raw[8] << 8) | raw[9]);
+  int16_t raw_gz = (int16_t)((raw[10] << 8) | raw[11]);
+
+  int16_t raw_temp = (int16_t)((raw[12] << 8) | raw[13]);
+
+  // Convert to physical units
+  data->accel_g[0]  = (float)raw_ax / ACCEL_CONVERSION;
+  data->accel_g[1]  = (float)raw_ay / ACCEL_CONVERSION;
+  data->accel_g[2]  = (float)raw_az / ACCEL_CONVERSION;
+
+  data->gyro_dps[0] = (float)raw_gx / GYRO_CONVERSION;
+  data->gyro_dps[1] = (float)raw_gy / GYRO_CONVERSION;
+  data->gyro_dps[2] = (float)raw_gz / GYRO_CONVERSION;
+
+  // Temperature conversion formula from datasheet
+  data->temp_c      = ((float)raw_temp / 128.0f) + 25.0f;
+}
+
+
+static void MAG_WriteReg(uint8_t reg, uint8_t val)
+{
+  uint8_t tx[2] = { reg & 0x7F, val }; // Bit 7 = 0 for SPI write
+  HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_RESET);
+  HAL_SPI_Transmit(&hspi1, tx, 2, 10);
+  HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
+}
+
+static void MAG_ReadRegs(uint8_t start_reg, uint8_t *buf, uint16_t len)
+{
+  uint8_t tx = start_reg | 0x80; // Bit 7 = 1 for SPI read
+  HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_RESET);
+  HAL_SPI_Transmit(&hspi1, &tx, 1, 10);
+  HAL_SPI_Receive(&hspi1, buf, len, 10);
+  HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
+}
+
+uint8_t MAG_Init(void)
+{
+  uint8_t who_am_i = 0;
+
+  HAL_GPIO_WritePin(MAG_CS_GPIO_Port, MAG_CS_Pin, GPIO_PIN_SET);
+  HAL_Delay(10); // Give chip time to boot  
+
+  // Verify SPI comms (0x4F should return 0x40)
+  IMU_ReadRegs(MAG_WHO_AM_I, &who_am_i, 1);
+  if (who_am_i != 0x40)
+  {
+    return 0; // We have a problem
+  }
+
+  MAG_WriteReg(MAG_CFG_REG_C, 0x14);
+  MAG_WriteReg(MAG_CFG_REG_A, 0x8c);
+  MAG_WriteReg(MAG_CFG_REG_B, 0x03);
+
+  HAL_Delay(50); // Give time for sensors to stabilize
+
+  return 1; // Success
+}
+
+void Read_MAG(MAG_Data_t *data)
+{
+  uint8_t raw[8];
+
+  MAG_ReadRegs(OUTX_L_REG, raw, 8);
+
+  // Combine bytes in pairs to create 16-bit integers
+  int16_t raw_x = (int16_t)((raw[0] << 8) | raw[1]);
+  int16_t raw_y = (int16_t)((raw[2] << 8) | raw[3]);
+  int16_t raw_z = (int16_t)((raw[4] << 8) | raw[5]);
+
+  int16_t raw_temp = (int16_t)((raw[6] << 8) | raw[7]);
+
+  // Convert to physical units
+  data->mag_ut[0]   = (float)raw_x / MAG_CONVERSION;
+  data->mag_ut[1]   = (float)raw_y / MAG_CONVERSION;
+  data->mag_ut[2]   = (float)raw_z / MAG_CONVERSION;
+
+  data->temp_c      = ((float)raw_temp / 8.0f) + 25.0f;
+}
+
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim->Instance == TIM_CHANNEL_6)
+  {
+    read_sensors_flag = 1;
   }
 }
 /* USER CODE END 4 */
