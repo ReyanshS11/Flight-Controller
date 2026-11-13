@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <iostream>
+#include "lwgps/lwgps.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,6 +92,7 @@ HCD_HandleTypeDef hhcd_USB_OTG_FS;
 /* USER CODE BEGIN PV */
 volatile uint8_t read_sensors_flag = 0;
 
+uint8_t barometer_online = 0;
 float pressure = 0.0f;
 float temperature = 0.0f;
 
@@ -105,6 +107,18 @@ uint8_t imu_online = 0;
 
 MAG_Data_t mag_data;
 uint8_t mag_online = 0;
+
+const uint8_t ubx_cfg_rate_10hz[14] = {
+    0xB5, 0x62,             // UBX Sync Header
+    0x06, 0x08,             // Class: CFG (0x06), ID: RATE (0x08)
+    0x06, 0x00,             // Payload Length: 6 bytes (Little-Endian)
+    0x64, 0x00,             // measRate: 100 ms = 0x0064 -> 10 Hz (Little-Endian)
+    0x01, 0x00,             // navRate: 1 cycle (must always be 1)
+    0x01, 0x00,             // timeRef: 1 = GPS time (0 = UTC time)
+    0x7A, 0x12              // Checksum: CK_A = 0x7A, CK_B = 0x12
+};
+
+lwgps_t gps_data;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -121,6 +135,7 @@ static void MX_UART8_Init(void);
 static void MX_USB_OTG_FS_HCD_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
+uint8_t Barometer_Init(void);
 void Read_Barometer(void);
 void Read_Charger(void);
 
@@ -129,6 +144,9 @@ void Read_IMU(IMU_Data_t *data);
 
 uint8_t MAG_Init(void);
 void Read_MAG(MAG_Data_t *data);
+
+void GPS_Init(void);
+void Read_GPS(lwgps_t *data);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -180,8 +198,13 @@ int main(void)
   MX_USB_OTG_FS_HCD_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
+  barometer_online = Barometer_Init();
+
   imu_online = IMU_Init();
   mag_online = MAG_Init();
+
+  lwgps_init(&gps_data);
+  GPS_Init();
 
   HAL_TIM_Base_Start_IT(&htim6);
   /* USER CODE END 2 */
@@ -213,7 +236,10 @@ int main(void)
           break;
 
         case 2:
-          Read_Barometer();
+          if (barometer_online)
+          {
+            Read_Barometer();
+          }
           break;
 
         case 3:
@@ -221,7 +247,7 @@ int main(void)
           break;
 
         case 4:
-          // Read GPS
+          Read_GPS(&gps_data);
           break;
 
         case 10:
@@ -817,6 +843,44 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+static HAL_StatusTypeDef BMP581_WriteReg(uint8_t reg, uint8_t val)
+{
+    return HAL_I2C_Mem_Write(&hi2c1, Baro_ADDR, reg, I2C_MEMADD_SIZE_8BIT, &val, 1, 10);
+}
+
+static HAL_StatusTypeDef BMP581_ReadRegs(uint8_t start_reg, uint8_t *buf, uint16_t len)
+{
+    return HAL_I2C_Mem_Read(&hi2c1, Baro_ADDR, start_reg, I2C_MEMADD_SIZE_8BIT, buf, len, 10);
+}
+
+uint8_t Barometer_Init(void)
+{
+    uint8_t chip_id = 0;
+
+    // Issue a soft reset (0xB6) and wait 5 ms for NVM memory to reload
+    BMP581_WriteReg(0x7E, 0xB6);
+    HAL_Delay(5);
+
+    // Verify I2C communication by reading CHIP_ID (0x01 -> returns 0x50)
+    if (BMP581_ReadRegs(0x01, &chip_id, 1) != HAL_OK || chip_id != 0x50) {
+        return 0; // Check I2C wiring, pull-ups, or 0x47 vs 0x46 SDO address
+    }
+
+    // Configure IIR Low-Pass Filter: Coeff 1 for Temp (0x01) & Coeff 1 for Press (0x08)
+    BMP581_WriteReg(0x31, 0x09);
+
+    // Enable Pressure (bit 6 = 0x40), Press OSR = 8x (bits 5:3 = 011 -> 0x18), Temp OSR = 1x (0x00)
+    // Combined: 0x40 | 0x18 | 0x00 = 0x58 (conversion time ~4.5 ms, easily fits inside 100 Hz)
+    BMP581_WriteReg(0x36, 0x58);
+
+    // Set ODR = 100.2 Hz (bits 6:2 = 0x0A << 2 = 0x28) and Power Mode = Normal (bits 1:0 = 01)
+    // Combined: 0x28 | 0x01 = 0x29 (bit 7 = 0 disables deep standby)
+    BMP581_WriteReg(0x37, 0x29);
+    HAL_Delay(10);
+
+    return 1; // Initialization successful
+}
+
 void Read_Barometer(void)
 {
   if (HAL_I2C_Mem_Read(&hi2c1, Baro_ADDR, Baro_REG_PRESSURE_0, I2C_MEMADD_SIZE_8BIT, bmp_buffer, 3, 100) == HAL_OK)
@@ -989,6 +1053,42 @@ void Read_MAG(MAG_Data_t *data)
   data->mag_ut[2]   = (float)raw_z / MAG_CONVERSION;
 
   data->temp_c      = ((float)raw_temp / 8.0f) + 25.0f;
+}
+
+
+void GPS_Init(void)
+{
+  // Ensure GPS CS starts HIGH and give the NEO-M8U 100 ms after power-on to boot
+  HAL_GPIO_WritePin(GPS_CS_GPIO_Port, GPS_CS_Pin, GPIO_PIN_SET);
+  HAL_Delay(100);
+
+  // Transmit the 14-byte UBX-CFG-RATE (10 Hz) packet over SPI
+  HAL_GPIO_WritePin(GPS_CS_GPIO_Port, GPS_CS_Pin, GPIO_PIN_RESET);
+  HAL_SPI_Transmit(&hspi1, (uint8_t *)ubx_cfg_rate_10hz, sizeof(ubx_cfg_rate_10hz), 10);
+  HAL_GPIO_WritePin(GPS_CS_GPIO_Port, GPS_CS_Pin, GPIO_PIN_SET);
+
+  // Give the GNSS engine a brief moment to apply the new rate
+  HAL_Delay(20);
+}
+
+void Read_GPS(lwgps_t *data)
+{
+  uint8_t dummy_tx[64];
+  uint8_t rx_buf[64];
+  memset(dummy_tx, 0xFF, sizeof(dummy_tx));
+
+  // Write 64 blank bytes while reading 64 bytes
+  HAL_GPIO_WritePin(GPS_CS_GPIO_Port, GPS_CS_Pin, GPIO_PIN_RESET);
+  HAL_SPI_TransmitReceive(&hspi1, (uint8_t *)dummy_tx, rx_buf, 64, 5);
+  HAL_GPIO_WritePin(GPS_CS_GPIO_Port, GPS_CS_Pin, GPIO_PIN_SET);
+
+  for (uint8_t i = 0; i < 64; i++)
+  {
+    if (rx_buf[i] != 0xFF)
+    {
+      lwgps_process(data, &rx_buf[i], 1);
+    }
+  }
 }
 
 
