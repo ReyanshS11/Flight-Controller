@@ -3,10 +3,11 @@ title: "Flight Controller"
 github: ""
 description: "A flight controller built for future projects that might need it."
 created_at: "2026-10-12"
-total_time: "29h 42m"
+total_time: "40h 12m"
 ---
 
 # October 12, 2026: Built Parts List
+<!-- fabricate:entry 364 -->
 
 I added in all of the parts needed for this project including researching each of them. I used the helper file to create all of the footprints from EasyEDA and LCSC. Next, I'm going to build the PCB in KiCad.
 
@@ -15,6 +16,7 @@ I added in all of the parts needed for this project including researching each o
 **Total time spent: 2h 30m**
 
 # October 15, 2026: Updated parts and started new part wiring
+<!-- fabricate:entry 499 -->
 
 I updated a few of the parts, specifically the microcontroller and barometer, I updated it to a better version of them. I also researched a little bit on drone flight controllers and what they need. I figured out that I need to add a way to communicate to the ESC, a magnetometer or GPS (or both).
 
@@ -26,7 +28,8 @@ Next, I will finish the wiring of the battery charger.
 
 **Total time spent: 2h 30m**
 
-# October 15, 2026: Finished wiring for battery charger.
+# October 15, 2026 (entry 2): Finished wiring for battery charger.
+<!-- fabricate:entry 500 -->
 
 I finished the full wiring for the battery charger, now it's time to move onto the next parts like the sensors. I also researched a little bit more about ESC's and how to implement them into my current design.
 
@@ -35,6 +38,7 @@ I finished the full wiring for the battery charger, now it's time to move onto t
 **Total time spent: 2h**
 
 # October 16, 2026: Finished wiring for buck-boost
+<!-- fabricate:entry 547 -->
 
 I finished the wiring for the next part, which is the 5V buck-boost. I also added in the correct parts for the inductors because they needed different models.
 
@@ -43,6 +47,7 @@ I finished the wiring for the next part, which is the 5V buck-boost. I also adde
 **Total time spent: 54m**
 
 # October 17, 2026: Added new parts
+<!-- fabricate:entry 561 -->
 
 I added in 3 new parts that I wanted. I added in a GPS, a LoRa module, and a magnetometer. The GPS is the NEO-M8U-06B, the LoRa module is the Ra-02, and the magnetometer is the LIS2MDLTR.
 
@@ -50,7 +55,8 @@ I added in 3 new parts that I wanted. I added in a GPS, a LoRa module, and a mag
 
 **Total time spent: 1h**
 
-# October 17, 2026: Finished wiring more components
+# October 17, 2026 (entry 2): Finished wiring more components
+<!-- fabricate:entry 589 -->
 
 I finished wiring the 3.3 buck, barometer, and the IMU. With this, I'm completely finished with the power components and a good bit through the sensors. Next, I will finish wiring all of the sensors and work a little bit on LoRa and GPS.
 
@@ -59,6 +65,7 @@ I finished wiring the 3.3 buck, barometer, and the IMU. With this, I'm completel
 **Total time spent: 48m**
 
 # October 18, 2026: Wired MicroSD and Magnetometer
+<!-- fabricate:entry 625 -->
 
 I finished wiring two more parts, the MicroSD and the magnetometer. I used SPI communication for the magnetometer instead of I2C like most of the other components. Next, I will wire the microcontroller.
 
@@ -66,7 +73,8 @@ I finished wiring two more parts, the MicroSD and the magnetometer. I used SPI c
 
 **Total time spent: 1h**
 
-# October 18, 2026: Wired GPS
+# October 18, 2026 (entry 2): Wired GPS
+<!-- fabricate:entry 660 -->
 
 I wired the GPS component for the flight controller, including adding in the antenna needed for it. It's using the SPI communication. Next, I will either wire the MCU or LoRa module and then I'm almost done. I don't know if I want to add in a way to connect a camera yet, so I'll have to figure that out soon.
 
@@ -75,6 +83,7 @@ I wired the GPS component for the flight controller, including adding in the ant
 **Total time spent: 1h 12m**
 
 # October 21, 2026: Connected MCU
+<!-- fabricate:entry 809 -->
 
 I added in all of the connections for the MCU to peripherals in STM32CubeMX. I ended up using only one of the DIO pins from LoRa because I think that should be enough for all of the useful info I need. I still need to wire it in KiCad and a few other small components.
 
@@ -83,6 +92,7 @@ I added in all of the connections for the MCU to peripherals in STM32CubeMX. I e
 **Total time spent: 1h 30m**
 
 # October 23, 2026: Wiring MCU
+<!-- fabricate:entry 1160 -->
 
 I started on the MCU wiring, including adding in the buttons and crystals needed for it. I also added in the jst connecters for the ESC and camera (I decided to add it in).
 
@@ -91,6 +101,7 @@ I started on the MCU wiring, including adding in the buttons and crystals needed
 **Total time spent: 2h**
 
 # October 24, 2026: Wired MCU and finished schematic
+<!-- fabricate:entry 1227 -->
 
 I finished wiring up the MCU and made the final touches to the schematic. Now, the only thing left to do is to route the PCB. I decided to use the RF_DIO1 pin as well and I changed to ESC pins from GPIO output to PWM generation channels.
 
@@ -99,6 +110,7 @@ I finished wiring up the MCU and made the final touches to the schematic. Now, t
 **Total time spent: 2h**
 
 # October 25, 2026: Switched Battery Chargers
+<!-- fabricate:entry 1261 -->
 
 I switched the battery charger I'm using from the BQ25883 to the BQ25887 so that I can get the cell balancing feature because it allows me to charge my battery using the USB safely.
 
@@ -107,6 +119,7 @@ I switched the battery charger I'm using from the BQ25883 to the BQ25887 so that
 **Total time spent: 1h**
 
 # October 28, 2026: Started PCB Design
+<!-- fabricate:entry 1492 -->
 
 I started designing the PCB. I placed all of the main components along with the parts connected to them. Next, I will organize the PCB and finalize the design.
 
@@ -115,6 +128,7 @@ I started designing the PCB. I placed all of the main components along with the 
 **Total time spent: 1h**
 
 # October 31, 2026: Started Routing
+<!-- fabricate:entry 1771 -->
 
 I started routing the PCB. I finished routing around half of the total components, and finalized the PCB layout. Next, I'll finish routing and do the ground plane.
 
@@ -123,6 +137,7 @@ I started routing the PCB. I finished routing around half of the total component
 **Total time spent: 2h**
 
 # November 2, 2026: Redesign & Routing
+<!-- fabricate:entry 1868 -->
 
 I completely redesigned the board because I realized that some of my components were placed so far away from the MCU pins they needed to be connected to that it would be impossible to connect them. I had almost finished the routing when I realized this so I deleted all of it and I changed the board and started routing again.
 
@@ -130,7 +145,8 @@ I completely redesigned the board because I realized that some of my components 
 
 **Total time spent: 2h 30m**
 
-# November 2, 2026: Finished PCB (minus silkscreen)
+# November 2, 2026 (entry 2): Finished PCB (minus silkscreen)
+<!-- fabricate:entry 2063 -->
 
 I finished the design and routing of the whole PCB so there aren't any more DRC errors that matter. The only ones left are errors complaining about hole width and clearance in the USB and MicroSD and warnings about the silkscreen. Next, I will finish the silkscreen.
 
@@ -139,6 +155,7 @@ I finished the design and routing of the whole PCB so there aren't any more DRC 
 **Total time spent: 1h 30m**
 
 # November 3, 2026: Finishing Touches
+<!-- fabricate:entry 2098 -->
 
 I finished organizing the silkscreen for the components and I added in the 3d models for all of the components so the 3D viewer now shows how the PCB will look after everything is on there.
 
@@ -147,9 +164,55 @@ I finished organizing the silkscreen for the components and I added in the 3d mo
 **Total time spent: 1h**
 
 # November 4, 2026: Final Changes
+<!-- fabricate:entry 2171 -->
 
 I worked on the README.md a little bit and made the final changes. I realized that the LoRa module footprint wasn't correct so I had to change that and I made the labels for each component bigger and easier to read.
 
 ![](https://fabricate.hackclub-assets.com/ff0ac6b00d557aa647bcebd8b2ae8f9d813eb87ca24f36c86f685f2690edfd37/image-png/image.png)
 
 **Total time spent: 3h 18m**
+
+# November 8, 2026: Schematic Reviews
+<!-- fabricate:entry 2400 -->
+
+I worked on any review comments related to the schematic part of the project. I rewired the 5V Buck Boost and a little bit of the battery charger and the LSE. I made it look cleaner and easier to read as well.
+
+![](https://fabricate.hackclub-assets.com/82a123abe6eb93a8649d16bcb62b16b35664b39c0ed6708450b0efc3054bf6c3/image-png/SchematicReviews.png)
+
+**Total time spent: 1h 30m**
+
+# November 10, 2026: Started Working on the Reviewed Design
+<!-- fabricate:entry 2587 -->
+
+I started working on a new version of the design that incorporates all of the changes that have been asked. I layed out the PCB for the most part and routed a few wires. I still have to rout the majority of them and also route the power plane.
+
+![](https://fabricate.hackclub-assets.com/7f0fd6c01b19f07b1335e6812f418d47b246458b7d3cb2485f1f0c50b766c621/image-png/DesignV2Started.png)
+
+**Total time spent: 2h**
+
+# November 13, 2026: Wrote Firmware
+<!-- fabricate:entry 2944 -->
+
+I wrote all the firmware for the FC. Right now it just reads all of the sensors and outputs them to structs and variables which should be plenty for testing and calibration purposes. I plan to write all of the code for actually making the drone fly when I build the drone because I don't have any specs right now.
+
+![](https://fabricate.hackclub-assets.com/971f429e212aee88d6bff501ddcf363f4f9211c88470653c410681506728762d/image-png/FirmwareFinished.png)
+
+**Total time spent: 3h**
+
+# November 15, 2026: Design V2 Finished
+<!-- fabricate:entry 3128 -->
+
+I finished up the PCB layout and routing for the updated version. I made it a 4 layer PCB and recalculated the trace width for the 50 ohm impedence. Now, all that's left is to add in the 3D models for the render and submit.
+
+![](https://fabricate.hackclub-assets.com/b68e78277616e80408d06cb19fda0dac5f9a976ef8b794b96cce9f409f0680b8/image-png/DesignV2Finished.png)
+
+**Total time spent: 2h**
+
+# November 16, 2026: Completed PCB
+<!-- fabricate:entry 3240 -->
+
+I'm fully done. Now I'm going to go ahead and resubmit this design after I get the price of the PCB. I didn't add any mounting holes because I don't have any space and anyways I don't plan on mounting it that way. I'll probably mount it using a 3d print or simple tape.
+
+![](https://fabricate.hackclub-assets.com/62d7472c7e55c883831e3a0c31bb426a8d2a9885cc8338a5045b201ce390f307/image-png/Final3DModelV2_View2.png)
+
+**Total time spent: 2h**
