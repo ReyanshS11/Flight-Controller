@@ -59,8 +59,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define RF_DIO1_Pin GPIO_PIN_2
-#define RF_DIO1_GPIO_Port GPIOE
 #define ESC_BAT_Pin GPIO_PIN_1
 #define ESC_BAT_GPIO_Port GPIOC
 #define RF_DIO0_Pin GPIO_PIN_0

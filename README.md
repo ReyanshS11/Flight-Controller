@@ -1,7 +1,7 @@
 # Express Flight Controller
 Express is a feature-packed flight controller for drones.
 
-![Final Design](</screenshots/Final Design/Final3DModel_View1.png>)
+![Final Design](</screenshots/Final Design V2/Final3DModelV2_View1.png>)
 
 ## Key Features
 - STM32H743VIT6 microcontroller for speed and performance
@@ -15,13 +15,17 @@ Express is a feature-packed flight controller for drones.
 - Connectors for ESC and camera
 
 ## Design Features
-- The complete flight controller fits within a 70x65mm space.
-- Comprised of two layers, front and back copper
+- The complete flight controller fits within a 70x70mm space.
+- Comprised of four layers, front and back copper along with two copper planes for PWR and GND
 - Silkscreen for organization and ease of use
 
-![Final Design](</screenshots/Final Design/Final3DModel_View2.png>)
+## Firmware
+The current firmware reads data from all sensors, callibration and further upgrades to be done when PCB is manufactured.
+The current firmware is also untested, this will also be done after manufacturing.
+
+![Final Design](</screenshots/Final Design V2/Final3DModelV2_View2.png>)
 
 ## Schematic and Design
-![Final Design](</screenshots/Final Design/SchematicFinal.png>)
+![Final Design](</screenshots/Final Design V2/SchematicFinalV2.png>)
 
-![Final Design](</screenshots/Final Design/PCBFinal.png>)
+![Final Design](</screenshots/Final Design V2/FinalPCBDesignV2.png>)
